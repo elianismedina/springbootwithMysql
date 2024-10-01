@@ -63,8 +63,10 @@ public class MovieController {
             return ResponseEntity.notFound().build();
         }
         Optional<Movie> optional = movieRepository.findById(id);
-        Movie movie = optional.get();
 
+        Movie movie = optional.orElse(null);
+
+        assert movie != null;
         double newRating = ((movie.getVotes() * movie.getRating())+rating)/(movie.getVotes() +1);
 
         movie.setVotes(movie.getVotes() +1);
